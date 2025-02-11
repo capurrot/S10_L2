@@ -1,14 +1,14 @@
-import { Component } from 'react'
-import { Button, Form } from 'react-bootstrap'
+import { Component } from "react";
+import { Button, Form } from "react-bootstrap";
 
 class AddComment extends Component {
   state = {
     comment: {
-      comment: '',
+      comment: "",
       rate: 1,
       elementId: this.props.asin,
     },
-  }
+  };
 
   componentDidUpdate(prevProps) {
     if (prevProps.asin !== this.props.asin) {
@@ -17,40 +17,37 @@ class AddComment extends Component {
           ...this.state.comment,
           elementId: this.props.asin,
         },
-      })
+      });
     }
   }
 
   sendComment = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      let response = await fetch(
-        'https://striveschool-api.herokuapp.com/api/comments',
-        {
-          method: 'POST',
-          body: JSON.stringify(this.state.comment),
-          headers: {
-            'Content-type': 'application/json',
-            Authorization: 'Bearer inserisci-qui-il-tuo-token',
-          },
-        }
-      )
+      let response = await fetch("https://striveschool-api.herokuapp.com/api/comments", {
+        method: "POST",
+        body: JSON.stringify(this.state.comment),
+        headers: {
+          "Content-type": "application/json",
+          Authorization: "Bearer inserisci-qui-il-tuo-token",
+        },
+      });
       if (response.ok) {
-        alert('Recensione inviata!')
+        alert("Recensione inviata!");
         this.setState({
           comment: {
-            comment: '',
+            comment: "",
             rate: 1,
             elementId: this.props.asin,
           },
-        })
+        });
       } else {
-        throw new Error('Qualcosa è andato storto')
+        throw new Error("Qualcosa è andato storto");
       }
     } catch (error) {
-      alert(error)
+      alert(error);
     }
-  }
+  };
 
   render() {
     return (
@@ -98,8 +95,8 @@ class AddComment extends Component {
           </Button>
         </Form>
       </div>
-    )
+    );
   }
 }
 
-export default AddComment
+export default AddComment;
